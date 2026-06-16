@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <title>Log Masuk</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Log Masuk</h1>
+
+    <nav>
+        <a href="index.html">Utama</a>
+        <a href="daftar.html">Daftar</a>
+        <a href="login.html">Log Masuk</a>
+        <a href="carian.html">Carian</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <form id="loginForm">
+
+        <label>Masukkan Email / Username / Nama</label>
+        <input type="text" id="inputLogin" required>
+
+        <button type="submit">Log Masuk</button>
+
+    </form>
+
+</div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let input = document.getElementById("inputLogin").value.toLowerCase();
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    let user = users.find(u =>
+        u.email.toLowerCase() === input ||
+        u.username.toLowerCase() === input ||
+        u.name.toLowerCase().includes(input)
+    );
+
+    if(user){
+        alert("✔ Login berjaya! Selamat datang " + user.name);
+    } else {
+        alert("❌ Login gagal");
+    }
+
+    document.getElementById("loginForm").reset();
+});
+</script>
+
+</body>
+</html>

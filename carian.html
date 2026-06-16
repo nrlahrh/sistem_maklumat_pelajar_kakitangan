@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <title>Carian</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Carian Kakitangan</h1>
+
+    <nav>
+        <a href="index.html">Utama</a>
+        <a href="daftar.html">Daftar</a>
+        <a href="login.html">Log Masuk</a>
+        <a href="carian.html">Carian</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="search-box">
+
+        <input type="text" id="searchInput" placeholder="Cari nama / username / email...">
+
+        <button onclick="searchStaff()">Cari</button>
+        <button onclick="resetSearch()">Reset</button>
+
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>Username</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+
+        <tbody id="staffTable"></tbody>
+    </table>
+
+</div>
+
+<script>
+let staffData = [];
+
+window.onload = function(){
+    staffData = JSON.parse(localStorage.getItem("users")) || [];
+};
+
+function searchStaff(){
+
+    let keyword = document.getElementById("searchInput").value.toLowerCase();
+
+    let result = staffData.filter(users =>
+        users.id.toString().includes(keyword) ||
+        users.name.toLowerCase().includes(keyword) ||
+        users.username.toLowerCase().includes(keyword) ||
+        users.email.toLowerCase().includes(keyword)
+    );
+
+    display(result);
+}
+
+function display(data){
+
+    let table = document.getElementById("staffTable");
+    table.innerHTML = "";
+
+    if(data.length === 0){
+        table.innerHTML = "<tr><td colspan='4'>Tiada data dijumpai</td></tr>";
+        return;
+    }
+
+    data.forEach(users => {
+        table.innerHTML += `
+            <tr>
+                <td>${users.id}</td>
+                <td>${users.name}</td>
+                <td>${users.username}</td>
+                <td>${users.email}</td>
+            </tr>
+        `;
+    });
+}
+
+function resetSearch(){
+    document.getElementById("searchInput").value = "";
+    document.getElementById("staffTable").innerHTML = "";
+}
+</script>
+
+</body>
+</html>

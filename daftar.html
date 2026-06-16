@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Daftar Akaun</h1>
+
+    <nav>
+        <a href="index.html">Utama</a>
+        <a href="daftar.html">Daftar</a>
+        <a href="login.html">Log Masuk</a>
+        <a href="carian.html">Carian</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <form id="registerForm">
+
+        <label>Nama</label>
+        <input type="text" id="name" required>
+
+        <label>Username</label>
+        <input type="text" id="username" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <button type="submit">Daftar</button>
+
+    </form>
+
+    <p id="msg"></p>
+
+</div>
+
+<script>
+document.getElementById("registerForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const user = {
+        id: Date.now(),
+        name: document.getElementById("name").value,
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value
+    };
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    users.push(user);
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    document.getElementById("msg").innerHTML = "✔ Pendaftaran berjaya!";
+    document.getElementById("registerForm").reset();
+});
+</script>
+
+</body>
+</html>
